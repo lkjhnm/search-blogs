@@ -1,0 +1,4 @@
+rootProject.name = 'search-blogs'
+include 'core'
+include 'web'
+

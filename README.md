@@ -1,1 +1,1 @@
-# search-blogs
+# search-blogs (SBS Application)
