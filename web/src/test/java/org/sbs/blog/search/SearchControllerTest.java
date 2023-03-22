@@ -21,12 +21,14 @@ import java.io.IOException;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
 @WebMvcTest(value = SearchController.class)
 class SearchControllerTest {
 
-	private static final ObjectMapper MAPPER = new ObjectMapper();
+	@Autowired
+	ObjectMapper MAPPER;
 
 	@Autowired
 	MockMvc mockMvc;
@@ -47,10 +49,8 @@ class SearchControllerTest {
 		var param = new LinkedMultiValueMap<String, String>();
 		param.add("query", "test");
 
-		mockMvc.perform(
-				       MockMvcRequestBuilders.get("/v1/search/blog")
-				                             .params(param)
-		       )
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/search/blog")
+		                                      .params(param))
 		       .andDo(MockMvcResultHandlers.print())
 		       .andExpect(MockMvcResultMatchers.status().isOk())
 		       .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -71,13 +71,11 @@ class SearchControllerTest {
 		var param = new LinkedMultiValueMap<String, String>();
 		param.add("query", "test");
 		param.add("page", "10");
-		param.add("size" , "50");
+		param.add("size", "50");
 		param.add("sort", "recency");
 
-		mockMvc.perform(
-				       MockMvcRequestBuilders.get("/v1/search/blog")
-				                             .params(param)
-		       )
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/search/blog")
+		                                      .params(param))
 		       .andDo(MockMvcResultHandlers.print())
 		       .andExpect(MockMvcResultMatchers.status().isOk())
 		       .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -92,5 +90,20 @@ class SearchControllerTest {
 		       );
 	}
 
+	@Test
+	void bad_request() throws Exception {
+		var param = new LinkedMultiValueMap<String, String>();
+		param.add("query", "test");
+		param.add("page", "100");
+		param.add("size", "500");
+		param.add("sort", "recency");
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/search/blog")
+		                                      .params(param))
+		       .andDo(MockMvcResultHandlers.print())
+		       .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
+		Mockito.verify(searchService, never()).search(any());
+	}
 
 }
