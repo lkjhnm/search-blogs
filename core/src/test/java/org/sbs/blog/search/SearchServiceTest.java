@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import retrofit2.Response;
 
@@ -25,6 +26,7 @@ import static org.mockito.Mockito.times;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestSearchConfiguration.class)
+@TestPropertySource(locations = "classpath:/application-test.properties")
 class SearchServiceTest {
 
 	@Autowired

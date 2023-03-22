@@ -21,7 +21,7 @@ import static org.mockito.Mockito.times;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestKakaoConfiguration.class)
-@TestPropertySource(properties = {"sbs.key.kakao=test-kakao-rest-key"})
+@TestPropertySource(locations = "classpath:/application-test.properties")
 class KakaoServiceTest {
 
 	@Autowired

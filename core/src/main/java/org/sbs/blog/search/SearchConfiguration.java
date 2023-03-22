@@ -5,6 +5,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import org.sbs.blog.search.kakako.KakaoApis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import retrofit2.Retrofit;
@@ -15,6 +16,8 @@ public class SearchConfiguration {
 
 	Logger logger = LoggerFactory.getLogger(OkHttpClient.class);
 
+	@Value("${sbs.api.kakao.origin}")
+	private String kakaoOrigin;
 	@Bean
 	HttpLoggingInterceptor httpLoggingInterceptor() {
 		return new HttpLoggingInterceptor(message -> {
@@ -35,7 +38,7 @@ public class SearchConfiguration {
 	KakaoApis kakaoClient() {
 		return new Retrofit.Builder()
 				.client(okHttpClient())
-				.baseUrl("https://dapi.kakao.com/")  // todo: extract to yml
+				.baseUrl(kakaoOrigin)
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build().create(KakaoApis.class);
 	}

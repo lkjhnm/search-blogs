@@ -24,7 +24,7 @@ import java.util.Map;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = TestKakaoConfiguration.class)
-@TestPropertySource(properties = {"sbs.key.kakao=test-kakao-rest-key"})
+@TestPropertySource(locations = "classpath:/application-test.properties")
 class KakaoApisTest {
 
 	@Autowired
@@ -37,7 +37,7 @@ class KakaoApisTest {
 
 	KakaoApis kakaoApis;
 
-	@Value("${sbs.key.kakao}")
+	@Value("#{'KakaoAK ${sbs.api.kakao.key}'}")
 	String restKey;
 
 	@BeforeEach
@@ -64,8 +64,7 @@ class KakaoApisTest {
 		setupMockResponse(new MockResponse().addHeader("Content-Type", "application/json")
 		                                    .setBody(mockResponse));
 		mockWebServer.url("/v2/search/blog");
-		Response<KakaoSearchResult> response = kakaoApis.search(String.format("KakaoAK %s", restKey),
-				                                                Map.of("query", "test",
+		Response<KakaoSearchResult> response = kakaoApis.search(restKey, Map.of("query", "test",
 						                                                "page", "1",
 						                                                "size", "10"))
 		                                                .execute();

@@ -15,8 +15,8 @@ import retrofit2.Response;
 import java.io.IOException;
 
 @TestConfiguration
+@TestPropertySource(locations = "classpath:application-test.properties")
 @Import({SearchService.class, SearchConfiguration.class, SearchEventPublisher.class})
-@TestPropertySource(properties = "spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false")
 public class TestSearchConfiguration {
 
 	private static final ObjectMapper MAPPER = new ObjectMapper();
