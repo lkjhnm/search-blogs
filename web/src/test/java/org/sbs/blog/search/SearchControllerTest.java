@@ -103,6 +103,13 @@ class SearchControllerTest {
 		       .andDo(MockMvcResultHandlers.print())
 		       .andExpect(MockMvcResultMatchers.status().isBadRequest());
 
+		param = new LinkedMultiValueMap<String, String>();
+		param.add("query_illegal", "test");
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/search/blog")
+		                                      .params(param))
+		       .andDo(MockMvcResultHandlers.print())
+		       .andExpect(MockMvcResultMatchers.status().isBadRequest());
+
 		Mockito.verify(searchService, never()).search(any());
 	}
 

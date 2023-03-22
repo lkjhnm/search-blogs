@@ -3,6 +3,11 @@ sbs:
     kakao:
       origin: http://localhost:8080/
       key: test-key
+    naver:
+      origin: http://localhost:8080/
+      key:
+        id: test-id
+        secret: test-secret
 
 spring:
   datasource:
