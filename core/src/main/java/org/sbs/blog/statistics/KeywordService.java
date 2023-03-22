@@ -35,7 +35,7 @@ public class KeywordService {
 		return repository.save(keyword.increaseCount());
 	}
 
-	public List<Keyword> getTopKeywords(int size) {
+	public List<Keyword> getPopularKeywords(int size) {
 		return keywordStatistics.values().stream()
 		                        .sorted(Comparator.comparingLong(Keyword::getCount).reversed())
 		                        .limit(size)

@@ -58,7 +58,7 @@ class KeywordServiceTest {
 		      .map(v -> new SearchEvent(this, v))
 		      .forEach(this.eventPublisher::publishEvent);
 
-		List<Keyword> topKeywords = keywordService.getTopKeywords(10);
+		List<Keyword> topKeywords = keywordService.getPopularKeywords(10);
 		Assertions.assertEquals(3, topKeywords.size());
 		Keyword first = topKeywords.get(0);
 		Keyword second = topKeywords.get(1);

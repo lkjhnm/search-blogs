@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "keyword": "test1",
+    "count": 10
+  },
+  {
+    "id": 2,
+    "keyword": "test2",
+    "count": 9
+  },
+  {
+    "id": 3,
+    "keyword": "test3",
+    "count": 8
+  },
+  {
+    "id": 4,
+    "keyword": "test4",
+    "count": 8
+  },
+  {
+    "id": 5,
+    "keyword": "test5",
+    "count": 6
+  },
+  {
+    "id": 6,
+    "keyword": "test6",
+    "count": 5
+  },
+  {
+    "id": 7,
+    "keyword": "test7",
+    "count": 4
+  },
+  {
+    "id": 8,
+    "keyword": "test8",
+    "count": 3
+  },
+  {
+    "id": 9,
+    "keyword": "test9",
+    "count": 2
+  }
+]
