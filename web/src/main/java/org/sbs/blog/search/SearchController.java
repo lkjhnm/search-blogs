@@ -6,6 +6,7 @@ import org.sbs.blog.search.dto.SearchResult;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +21,7 @@ public class SearchController {
 
 	private final SearchService searchService;
 
-	@RequestMapping(value = "/blog", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/blog", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<SearchResult> search(@Valid SearchParam searchParam) {
 		return ResponseEntity.of(Optional.ofNullable(searchService.search(searchParam)));
 	}

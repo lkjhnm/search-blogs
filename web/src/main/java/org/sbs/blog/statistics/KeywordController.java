@@ -5,6 +5,7 @@ import org.sbs.blog.statistics.entity.Keyword;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class KeywordController {
 
 	private final KeywordService keywordService;
 
-	@RequestMapping(value = "/keyword/popular", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/keyword/popular", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Keyword>> popularKeyword(@RequestParam(defaultValue = DEFAULT_SIZE)
 	                                                    @Min(1) @Max(10) int size) {
 		return ResponseEntity.of(Optional.ofNullable(keywordService.getPopularKeywords(size)));
