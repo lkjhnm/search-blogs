@@ -2,9 +2,11 @@ package org.sbs.blog.search.dto;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.jackson.Jacksonized;
 
 @Data
 @Builder
+@Jacksonized
 public class SearchParam {
 	String query;
 
@@ -15,9 +17,9 @@ public class SearchParam {
 	int size = 10;
 
 	@Builder.Default
-	SortType sort = SortType.Accuracy;
+	SortType sort = SortType.accuracy;
 
 	public enum SortType {
-		Accuracy, Recency
+		accuracy, recency
 	}
 }

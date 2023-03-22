@@ -30,7 +30,7 @@ public class KakaoService implements Searchable {
 
 	// server 로부터 넘어온 query는 url-encode가 돼있을까?
 	private Map<String, String> queryMap(SearchParam searchParam) {
-		String sort = searchParam.getSort().equals(SearchParam.SortType.Accuracy) ? "accuracy" : "recency";
+		String sort = searchParam.getSort().equals(SearchParam.SortType.accuracy) ? "accuracy" : "recency";
 		return Map.of("query", searchParam.getQuery(),
 				"sort", sort,
 				"page", String.valueOf(searchParam.getPage()),
