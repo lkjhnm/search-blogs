@@ -10,25 +10,26 @@ import org.springframework.test.context.ContextConfiguration;
 
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@AutoConfigureTestDatabase(replace =  AutoConfigureTestDatabase.Replace.NONE)
 @ContextConfiguration(classes = TestKeywordConfiguration.class)
+@AutoConfigureTestDatabase(replace =  AutoConfigureTestDatabase.Replace.NONE)
 class KeywordRepositoryTest {
 
 	@Autowired
 	KeywordRepository keywordRepository;
 
+	Keyword test;
+
 	@BeforeEach
 	void before() {
-		Keyword test = Keyword.builder().keyword("test").count(1l).build();
+		test = Keyword.builder().keyword("test").build();
 		keywordRepository.save(test);
 	}
 
 	@Test
 	@Order(1)
 	void save() {
-		Keyword test = Keyword.builder().keyword("test2").count(1l).build();
-		Keyword saved = keywordRepository.save(test);
-		Assertions.assertEquals(2, saved.getId());
+		Keyword saved = keywordRepository.save(Keyword.builder().keyword("test2").build());
+		Assertions.assertEquals(this.test.getId() + 1, saved.getId());
 	}
 
 	@Test

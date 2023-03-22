@@ -1,9 +1,6 @@
 package org.sbs.blog.statistics.entity;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,10 +22,14 @@ public class Keyword {
 	@Column
 	private Long count;
 
+	public Keyword increaseCount() {
+		this.count++;
+		return this;
+	}
 
 	@Builder
-	public Keyword(String keyword, Long count) {
+	public Keyword(String keyword) {
 		this.keyword = keyword;
-		this.count = count;
+		this.count = 0l;
 	}
 }
