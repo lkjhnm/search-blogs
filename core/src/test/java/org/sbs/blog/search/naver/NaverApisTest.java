@@ -1,4 +1,4 @@
-package org.sbs.blog.search.kakako;
+package org.sbs.blog.search.naver;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -18,57 +18,56 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.io.IOException;
 import java.util.Map;
 
+import static org.sbs.blog.search.naver.TestNaverConfiguration.X_NAVER_CLIENT_ID;
+import static org.sbs.blog.search.naver.TestNaverConfiguration.X_NAVER_CLIENT_SECRET;
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = TestKakaoConfiguration.class)
+@ContextConfiguration(classes = TestNaverConfiguration.class)
 @TestPropertySource(locations = "classpath:/application-test.properties")
-class KakaoApisTest extends AbstractApiTestBase {
+class NaverApisTest extends AbstractApiTestBase {
+
+	NaverApis naverApis;
 
 	@Autowired
 	String mockResponse;
 
-	@Value("#{'KakaoAK ${sbs.api.kakao.key}'}")
-	String restKey;
+	@Value("${sbs.api.naver.key.id}")
+	String keyId;
+
+	@Value("${sbs.api.naver.key.secret}")
+	String keySecret;
 
 	@Autowired
-	KakaoSearchResult expected;
-
-	KakaoApis kakaoApis;
+	NaverSearchResult expected;
 
 	@Override
 	protected void init() {
-		kakaoApis = new Retrofit.Builder()
+		naverApis = new Retrofit.Builder()
 				.client(okHttpClient)
 				.baseUrl(String.format("http://%s:%d", mockWebServer.getHostName(), mockWebServer.getPort()))
 				.addConverterFactory(JacksonConverterFactory.create())
-				.build().create(KakaoApis.class);
+				.build().create(NaverApis.class);
 	}
 
 	@Test
 	void search() throws IOException, InterruptedException {
 		setupMockResponse(new MockResponse().addHeader("Content-Type", "application/json")
 		                                    .setBody(mockResponse));
-		mockWebServer.url("/v2/search/blog");
-		Response<KakaoSearchResult> response = kakaoApis.search(restKey, Map.of("query", "test",
-						                                                "page", "1",
-						                                                "size", "10"))
+
+		mockWebServer.url("/v1/search/blog.json");
+		Map<String, String> headers = Map.of(
+				X_NAVER_CLIENT_ID, keyId,
+				X_NAVER_CLIENT_SECRET, keySecret
+		);
+
+		Response<NaverSearchResult> response = naverApis.search(headers, Map.of("query", "test",
+				                                                "start", "1",
+				                                                "display", "10"))
 		                                                .execute();
-		KakaoSearchResult searchResult = response.body();
+		NaverSearchResult searchResult = response.body();
 		Assertions.assertEquals(expected, searchResult);
 		RecordedRequest request = mockWebServer.takeRequest();
-		Assertions.assertEquals("KakaoAK test-kakao-rest-key", request.getHeader("Authorization"));
+		Assertions.assertEquals("test-id", request.getHeader(X_NAVER_CLIENT_ID));
+		Assertions.assertEquals("test-secret", request.getHeader(X_NAVER_CLIENT_SECRET));
 	}
-
-	@Test
-	void search_fail() throws IOException {
-		setupMockResponse(new MockResponse().setResponseCode(500));
-		mockWebServer.url("/v2/search/blog");
-		Response<KakaoSearchResult> response = kakaoApis.search(String.format("KakaoAK %s", restKey),
-				                                                Map.of("query", "test",
-						                                                "page", "1",
-						                                                "size", "10"))
-		                                                .execute();
-		Assertions.assertFalse(response.isSuccessful());
-	}
-
 }

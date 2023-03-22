@@ -40,7 +40,7 @@ class SearchControllerTest {
 
 	@PostConstruct
 	void init() throws IOException {
-		mockResult = MAPPER.readValue(new ClassPathResource("/sbs-search-res.json").getFile(), SearchResult.class);
+		mockResult = MAPPER.readValue(new ClassPathResource("/sbs-search-kakao-res.json").getFile(), SearchResult.class);
 	}
 
 	@Test

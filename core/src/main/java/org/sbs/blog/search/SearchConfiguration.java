@@ -3,6 +3,7 @@ package org.sbs.blog.search;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import org.sbs.blog.search.kakako.KakaoApis;
+import org.sbs.blog.search.naver.NaverApis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,10 @@ public class SearchConfiguration {
 
 	@Value("${sbs.api.kakao.origin}")
 	private String kakaoOrigin;
+
+	@Value("${sbs.api.naver.origin}")
+	private String naverOrigin;
+
 	@Bean
 	HttpLoggingInterceptor httpLoggingInterceptor() {
 		return new HttpLoggingInterceptor(message -> {
@@ -41,5 +46,14 @@ public class SearchConfiguration {
 				.baseUrl(kakaoOrigin)
 				.addConverterFactory(JacksonConverterFactory.create())
 				.build().create(KakaoApis.class);
+	}
+
+	@Bean
+	NaverApis naverClient() {
+		return new Retrofit.Builder()
+				.client(okHttpClient())
+				.baseUrl(naverOrigin)
+				.addConverterFactory(JacksonConverterFactory.create())
+				.build().create(NaverApis.class);
 	}
 }
