@@ -34,6 +34,9 @@ public class SearchService {
 				Response<SearchResults> response = searchable.search(searchParam);
 				if (response.isSuccessful()) {
 					return Optional.ofNullable(response.body().result());
+				} else {
+					logger.warn("Failed to search with this api-module {}, status {}, message {}",
+							searchable, response.code(), response.message());
 				}
 			} catch (Exception e) {
 				logger.warn("Exception occurred during searching blog", e);

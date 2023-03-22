@@ -19,7 +19,7 @@ public class KakaoService implements Searchable {
 
 	private final KakaoApis kakaoApis;
 
-	@Value("${sbs.key.kakao}")
+	@Value("#{'KakaoAK ${sbs.key.kakao}'}")
 	private String apiKey;
 
 	@Override

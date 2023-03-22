@@ -52,7 +52,7 @@ class KakaoServiceTest {
 						"sort", "accuracy");
 
 		Mockito.verify(kakaoApis, times(1))
-		       .search(eq("test-kakao-rest-key"), eq(expectedParam));
+		       .search(eq("KakaoAK test-kakao-rest-key"), eq(expectedParam));
 	}
 
 	private SearchParam mockParam() {
