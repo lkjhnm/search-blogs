@@ -21,8 +21,8 @@ public class Keyword {
 	@JsonIgnore
 	private Long id;
 
-	@Column(unique = true, nullable = false)
-	private String keyword; //todo: 길이 제한 확인
+	@Column(unique = true, nullable = false, columnDefinition = "TEXT")
+	private String keyword;
 
 	@Column
 	private Long count;

@@ -6,12 +6,15 @@ import org.sbs.blog.search.dto.SearchResult;
 import org.sbs.blog.search.dto.SearchResult.Blog;
 import org.sbs.blog.search.dto.SearchResult.Meta;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Data
 public class NaverSearchResult implements SearchResults {
+
+	private static final DateTimeFormatter NAVER_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHH:mm:ss");
 
 	String lastBuildDate;
 	int total;
@@ -55,10 +58,14 @@ public class NaverSearchResult implements SearchResults {
 		           .title(item.getTitle())
 		           .url(item.getLink())
 		           .contents(item.getDescription())
-		           .postdate(item.getPostdate())
+		           .postdate(convertToLocalDateTimeFormat(item.getPostdate()), NAVER_FORMATTER)
 		           .name(item.getBloggername())
 		           .extras(extra(item))
 		           .build();
+	}
+
+	private String convertToLocalDateTimeFormat(String postdate) {
+		return String.format("%s00:00:00", postdate);
 	}
 
 	private Map<String, Object> extra(Item item) {

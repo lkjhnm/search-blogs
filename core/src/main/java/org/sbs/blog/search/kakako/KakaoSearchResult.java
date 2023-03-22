@@ -7,6 +7,7 @@ import lombok.Data;
 import org.sbs.blog.search.SearchResults;
 import org.sbs.blog.search.dto.SearchResult;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -65,7 +66,7 @@ public class KakaoSearchResult implements SearchResults {
 		                        .name(document.getBlogname())
 		                        .contents(document.getContents())
 		                        .url(document.getUrl())
-		                        .postdate(document.getDatetime())
+		                        .postdate(document.getDatetime(), DateTimeFormatter.ISO_OFFSET_DATE_TIME)
 								.extras(extra(document))
 		                        .build();
 	}

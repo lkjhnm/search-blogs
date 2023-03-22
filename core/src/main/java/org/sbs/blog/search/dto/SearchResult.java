@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -36,8 +38,23 @@ public class SearchResult {
 		String contents;
 		String url;
 		String name;
-		String postdate;
+		LocalDateTime postdate;
 		Map<String, Object> extras;
+
+		public String getPostdate() {
+			return postdate.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+		}
+
+		public static class BlogBuilder {
+			public BlogBuilder postdate(String postdate) {
+				return postdate(postdate, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+			}
+
+			public BlogBuilder postdate(String postdate, DateTimeFormatter formatter) {
+				this.postdate = LocalDateTime.parse(postdate, formatter);
+				return this;
+			}
+		}
 	}
 
 }
