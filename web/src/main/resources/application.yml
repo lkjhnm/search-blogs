@@ -7,3 +7,4 @@ spring:
   jpa:
     database: h2
     hibernate.ddl-auto: update
+    open-in-view: false

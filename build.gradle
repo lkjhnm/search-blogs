@@ -38,7 +38,7 @@ subprojects {
 
         testImplementation 'org.springframework.boot:spring-boot-starter-test'
         // https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit-mock
-        testImplementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
+        testImplementation 'com.squareup.retrofit2:retrofit-mock:2.7.2'
     }
 
     test {
