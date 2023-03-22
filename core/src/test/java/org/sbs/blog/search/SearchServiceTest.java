@@ -8,9 +8,11 @@ import org.mockito.Mockito;
 import org.sbs.blog.search.TestSearchConfiguration.MockSearchResult;
 import org.sbs.blog.search.dto.SearchParam;
 import org.sbs.blog.search.dto.SearchResult;
+import org.sbs.blog.search.event.SearchEventPublisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import retrofit2.Response;
@@ -27,6 +29,9 @@ class SearchServiceTest {
 
 	@Autowired
 	SearchService searchService;
+
+	@SpyBean
+	SearchEventPublisher eventPublisher;
 
 	@MockBean
 	@Qualifier("mockSearchableFirst")
@@ -48,6 +53,7 @@ class SearchServiceTest {
 		Assertions.assertEquals(expectedResult, searchService.search(searchParam));
 		Mockito.verify(mockSearchableFirst, times(1)).search(eq(searchParam));
 		Mockito.verify(mockSearchableSecond, times(0)).search(any());
+		Mockito.verify(eventPublisher, times(1)).publish(eq(searchParam));
 	}
 
 	@Test

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Order;
 import org.sbs.blog.search.dto.SearchParam;
 import org.sbs.blog.search.dto.SearchResult;
+import org.sbs.blog.search.event.SearchEventPublisher;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
@@ -14,7 +15,7 @@ import retrofit2.Response;
 import java.io.IOException;
 
 @TestConfiguration
-@Import({SearchService.class, SearchConfiguration.class})
+@Import({SearchService.class, SearchConfiguration.class, SearchEventPublisher.class})
 @TestPropertySource(properties = "spring.jackson.serialization.WRITE_DATES_AS_TIMESTAMPS=false")
 public class TestSearchConfiguration {
 

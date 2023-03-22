@@ -3,6 +3,7 @@ package org.sbs.blog.search;
 import lombok.RequiredArgsConstructor;
 import org.sbs.blog.search.dto.SearchParam;
 import org.sbs.blog.search.dto.SearchResult;
+import org.sbs.blog.search.event.SearchEventPublisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,11 @@ public class SearchService {
 
 	private final List<Searchable> searches;
 
+	private final SearchEventPublisher searchEventPublisher;
+
 	public SearchResult search(SearchParam searchParam) {
 		SearchResult result = searches(searchParam).orElseThrow(RuntimeException::new);
-		// todo: publish Search Event
+		searchEventPublisher.publish(searchParam);
 		return result;
 	}
 

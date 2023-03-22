@@ -7,15 +7,17 @@ import lombok.Data;
 @Builder
 public class SearchParam {
 	String query;
-	int page;
-	int size;
+
+	@Builder.Default
+	int page = 1;
+
+	@Builder.Default
+	int size = 10;
 
 	@Builder.Default
 	SortType sort = SortType.Accuracy;
 
 	public enum SortType {
 		Accuracy, Recency
-
-
 	}
 }
