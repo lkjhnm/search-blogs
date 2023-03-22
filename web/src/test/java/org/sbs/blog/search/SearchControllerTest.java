@@ -106,4 +106,19 @@ class SearchControllerTest {
 		Mockito.verify(searchService, never()).search(any());
 	}
 
+	@Test
+	void no_such_blog() throws Exception {
+		Mockito.when(searchService.search(any(SearchParam.class))).thenThrow(NoSuchBlogException.class);
+		var param = new LinkedMultiValueMap<String, String>();
+		param.add("query", "NO SUCH BLOG EXCEPTION");
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/v1/search/blog")
+		                                      .params(param))
+		       .andDo(MockMvcResultHandlers.print())
+		       .andExpect(MockMvcResultMatchers.status().isOk())
+		       .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_VALUE))
+		       .andExpect(MockMvcResultMatchers.content()
+		                                       .json(MAPPER.writeValueAsString(SearchResult.builder().build())));
+	}
+
 }

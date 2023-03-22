@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.jackson.Jacksonized;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -12,15 +13,19 @@ import java.util.Map;
 @Jacksonized
 public class SearchResult {
 
-	private Meta meta;
-	private List<Blog> blogs;
+	@Builder.Default
+	private Meta meta = Meta.builder().build();
+	@Builder.Default
+	private List<Blog> blogs = Collections.emptyList();
 
 	@Data
 	@Builder
 	@Jacksonized
 	public static class Meta {
 		int total;
-		boolean end;
+
+		@Builder.Default
+		boolean end = true;
 	}
 
 	@Data

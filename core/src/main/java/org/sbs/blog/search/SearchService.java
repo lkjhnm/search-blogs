@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import retrofit2.Response;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -23,7 +24,7 @@ public class SearchService {
 	private final SearchEventPublisher searchEventPublisher;
 
 	public SearchResult search(SearchParam searchParam) {
-		SearchResult result = searches(searchParam).orElseThrow(RuntimeException::new);
+		SearchResult result = searches(searchParam).orElseThrow(NoSuchBlogException::new);
 		searchEventPublisher.publish(searchParam);
 		return result;
 	}
