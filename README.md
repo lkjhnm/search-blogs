@@ -1,10 +1,12 @@
 # search-blogs (SBS Application)
 
+### Executable Module
+https://github.com/lkjhnm/search-blogs/raw/main/dist/sbs-web-1.0.0-SNAPSHOT.jar
+
 ### 외부 라이브러리
 - Retrofit2 : REST API 연계를 위한 REST Client 모듈로서 사용
 - hibernate-validator : 효율적인 요청 파라미터 검증을 위해 사용
 - lombok : POJO 클래스의 getter/setter/toString/builder 자동화를 위해 사용
-
 
 ### API 명세
 
