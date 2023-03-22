@@ -8,6 +8,7 @@ import org.sbs.blog.search.SearchResults;
 import org.sbs.blog.search.dto.SearchResult;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Data
@@ -65,6 +66,11 @@ public class KakaoSearchResult implements SearchResults {
 		                        .contents(document.getContents())
 		                        .url(document.getUrl())
 		                        .postdate(document.getDatetime())
+								.extras(extra(document))
 		                        .build();
+	}
+
+	private Map<String, Object> extra(Document document) {
+		return Map.of("thumbnail", document.getThumbnail());
 	}
 }
